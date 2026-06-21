@@ -406,6 +406,65 @@
     .nav-item:hover { color: #fff; border-bottom-color: var(--accent); }
     .nav-item .nav-icon { font-size: 1.2rem; }
 
+    /* OWNER RECOMMENDATIONS */
+    .owner-rec-box {
+      background: linear-gradient(135deg, #1e2e1a, #2a3d20);
+      border: 1px solid #4a7c35;
+      border-radius: 16px;
+      padding: 22px 24px;
+      margin-bottom: 28px;
+    }
+    .owner-rec-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+    .owner-avatar {
+      width: 48px; height: 48px;
+      background: #4a7c35;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem;
+      flex-shrink: 0;
+    }
+    .owner-rec-header h3 { font-size: 1rem; color: #a8e07a; margin-bottom: 3px; }
+    .owner-rec-header p { font-size: 0.82rem; color: #7aaa55; }
+    .owner-rec-badge {
+      margin-left: auto;
+      background: rgba(74,124,53,0.3);
+      border: 1px solid #4a7c35;
+      color: #a8e07a;
+      border-radius: 20px;
+      padding: 4px 12px;
+      font-size: 0.72rem;
+      font-weight: bold;
+      letter-spacing: 0.5px;
+    }
+    .owner-rec-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+      gap: 10px;
+    }
+    .owner-rec-item {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(74,124,53,0.3);
+      border-radius: 10px;
+      padding: 12px 14px;
+    }
+    .owner-rec-item h4 { font-size: 0.88rem; color: #c8f0a0; margin-bottom: 5px; }
+    .owner-rec-item .rec-addr { font-size: 0.78rem; color: #7aaa55; line-height: 1.5; }
+    .owner-rec-item .rec-tel { font-size: 0.78rem; color: #5a9040; margin-top: 4px; }
+    .owner-rec-item .rec-tel a { color: #88cc55; text-decoration: none; }
+    .owner-rec-section-title {
+      font-size: 0.7rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #5a9040;
+      margin: 16px 0 8px;
+    }
+
     /* PRACTICAL CARDS (panifici, gelaterie, etc.) */
     .practical-grid {
       display: grid;
@@ -982,6 +1041,128 @@
 <section id="ristoranti">
   <div class="section-label">Dove mangiare</div>
   <h2>Pesce fresco — locali autentici</h2>
+
+  <!-- CONSIGLI PROPRIETARIO -->
+  <div class="owner-rec-box">
+    <div class="owner-rec-header">
+      <div class="owner-avatar">👨‍🍳</div>
+      <div>
+        <h3>Consigliati da Girolamo Dirodi</h3>
+        <p>Proprietario del Residence Costamartino — i suoi locali di fiducia a Vieste</p>
+      </div>
+      <span class="owner-rec-badge">✓ Segnalati dal proprietario</span>
+    </div>
+
+    <div class="owner-rec-section-title">In città</div>
+    <div class="owner-rec-grid">
+
+      <div class="owner-rec-item">
+        <h4>Osteria degli Archi</h4>
+        <div class="rec-addr">📍 Via Ripe 2</div>
+        <div class="rec-tel">☎ <a href="tel:0884705199">0884.705199</a></div>
+        <a class="map-link" href="https://maps.google.com/?q=Osteria+degli+Archi+Vieste+FG" target="_blank">📍 Google Maps</a>
+      </div>
+
+      <div class="owner-rec-item">
+        <h4>Al Dragone ⭐</h4>
+        <div class="rec-addr">📍 Via Duomo 8</div>
+        <div class="rec-tel">☎ <a href="tel:0884701212">0884.701212</a></div>
+        <div class="rec-tel" style="color:#a8e07a;font-size:0.75rem">↑ già in guida</div>
+        <a class="map-link" href="https://maps.google.com/?q=Al+Dragone+Ristorante+Vieste+FG" target="_blank">📍 Google Maps</a>
+      </div>
+
+      <div class="owner-rec-item">
+        <h4>Molo 54</h4>
+        <div class="rec-addr">📍 Molo nord</div>
+        <div class="rec-tel">☎ <a href="tel:0884701080">0884.701080</a></div>
+        <a class="map-link" href="https://maps.google.com/?q=Ristorante+Molo54+Vieste+FG" target="_blank">📍 Google Maps</a>
+      </div>
+
+      <div class="owner-rec-item">
+        <h4>Borgo Antico</h4>
+        <div class="rec-addr">📍 Corso C. Battisti</div>
+        <div class="rec-tel">☎ <a href="tel:0884701377">0884.701377</a></div>
+        <a class="map-link" href="https://maps.google.com/?q=Borgo+Antico+Ristorante+Vieste+FG" target="_blank">📍 Google Maps</a>
+      </div>
+
+      <div class="owner-rec-item">
+        <h4>Osteria Al Duomo</h4>
+        <div class="rec-addr">📍 Via Alessandro III 27</div>
+        <div class="rec-tel">☎ <a href="tel:0884708243">0884.708243</a></div>
+        <a class="map-link" href="https://maps.google.com/?q=Osteria+Al+Duomo+Vieste+FG" target="_blank">📍 Google Maps</a>
+      </div>
+
+      <div class="owner-rec-item">
+        <h4>Al Tramonto</h4>
+        <div class="rec-addr">📍 Loc. Porticello</div>
+        <div class="rec-tel">☎ <a href="tel:0884594581">0884.594581</a></div>
+        <a class="map-link" href="https://maps.google.com/?q=Ristorante+Al+Tramonto+Porticello+Vieste+FG" target="_blank">📍 Google Maps</a>
+      </div>
+
+      <div class="owner-rec-item">
+        <h4>Da Enzo — Paposceria</h4>
+        <div class="rec-addr">📍 Via Tre Piccioni 1</div>
+        <div class="rec-tel">☎ <a href="tel:3284121982">328.4121982</a></div>
+        <a class="map-link" href="https://maps.google.com/?q=Da+Enzo+Paposceria+Vieste+FG" target="_blank">📍 Google Maps</a>
+      </div>
+
+      <div class="owner-rec-item">
+        <h4>Box 19</h4>
+        <div class="rec-addr">📍 Via S. Maria di Merino 13</div>
+        <div class="rec-tel">☎ <a href="tel:0884705229">0884.705229</a></div>
+        <a class="map-link" href="https://maps.google.com/?q=Ristorante+Box+19+Vieste+FG" target="_blank">📍 Google Maps</a>
+      </div>
+
+      <div class="owner-rec-item">
+        <h4>Lido San Lorenzo</h4>
+        <div class="rec-addr">📍 Loc. Defensola</div>
+        <div class="rec-tel">☎ <a href="tel:0884320610">0884.320610</a></div>
+        <a class="map-link" href="https://maps.google.com/?q=Lido+San+Lorenzo+Defensola+Vieste+FG" target="_blank">📍 Google Maps</a>
+      </div>
+
+      <div class="owner-rec-item">
+        <h4>Caffetteria Ferri</h4>
+        <div class="rec-addr">📍 Lungomare Europa 33</div>
+        <div class="rec-tel">☎ <a href="tel:0884706320">0884.706320</a></div>
+        <a class="map-link" href="https://maps.google.com/?q=Caffetteria+Ferri+Vieste+FG" target="_blank">📍 Google Maps</a>
+      </div>
+
+    </div>
+
+    <div class="owner-rec-section-title">Fuori dal centro</div>
+    <div class="owner-rec-grid">
+
+      <div class="owner-rec-item">
+        <h4>Masseria La Valle del Cerro</h4>
+        <div class="rec-addr">📍 Loc. Marzaniello</div>
+        <div class="rec-tel">☎ <a href="tel:3403131765">340.3131765</a></div>
+        <a class="map-link" href="https://maps.google.com/?q=Masseria+Valle+del+Cerro+Vieste+FG" target="_blank">📍 Google Maps</a>
+      </div>
+
+      <div class="owner-rec-item">
+        <h4>Locanda San Luca</h4>
+        <div class="rec-addr">📍 Loc. Spacco</div>
+        <div class="rec-tel">☎ <a href="tel:0884705930">0884.705930</a></div>
+        <a class="map-link" href="https://maps.google.com/?q=Locanda+San+Luca+Vieste+FG" target="_blank">📍 Google Maps</a>
+      </div>
+
+      <div class="owner-rec-item">
+        <h4>Lume di Candela</h4>
+        <div class="rec-addr">📍 Loc. Piano Piccolo</div>
+        <div class="rec-tel">☎ <a href="tel:3280194914">328.0194914</a></div>
+        <a class="map-link" href="https://maps.google.com/?q=Lume+di+Candela+Ristorante+Vieste+FG" target="_blank">📍 Google Maps</a>
+      </div>
+
+      <div class="owner-rec-item">
+        <h4>Chalet degli Ulivi</h4>
+        <div class="rec-addr">📍 Loc. Marchionna 3</div>
+        <div class="rec-tel">☎ <a href="tel:3464143598">346.4143598</a></div>
+        <a class="map-link" href="https://maps.google.com/?q=Chalet+degli+Ulivi+Vieste+FG" target="_blank">📍 Google Maps</a>
+      </div>
+
+    </div>
+  </div>
+
   <div class="food-list">
 
     <div class="food-item">
