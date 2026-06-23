@@ -369,42 +369,72 @@
     }
     footer span { color: var(--sea-light); }
 
-    /* NAV MENU */
+    /* NAV MENU — TWO LEVEL */
     .nav-menu {
       position: sticky;
       top: 0;
       z-index: 100;
-      background: rgba(20,20,20,0.95);
-      backdrop-filter: blur(10px);
+      background: rgba(18,18,18,0.97);
+      backdrop-filter: blur(12px);
       border-bottom: 1px solid #2a2a2a;
-      padding: 0 16px;
     }
-    .nav-inner {
+    .nav-cities-row {
       max-width: 760px;
       margin: 0 auto;
       display: flex;
-      gap: 4px;
+      gap: 0;
       overflow-x: auto;
       scrollbar-width: none;
       -ms-overflow-style: none;
+      border-bottom: 1px solid #282828;
+      padding: 0 12px;
     }
-    .nav-inner::-webkit-scrollbar { display: none; }
+    .nav-cities-row::-webkit-scrollbar { display: none; }
+    .nav-city-btn {
+      padding: 9px 16px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      color: #666;
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+      font-family: inherit;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .nav-city-btn:hover { color: #bbb; }
+    .nav-city-btn.active { color: #fff; border-bottom-color: var(--accent); }
+    .nav-sections-row {
+      max-width: 760px;
+      margin: 0 auto;
+      display: none;
+      gap: 2px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      padding: 0 12px;
+    }
+    .nav-sections-row::-webkit-scrollbar { display: none; }
+    .nav-sections-row.active { display: flex; }
     .nav-item {
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 3px;
-      padding: 10px 12px;
+      padding: 7px 10px;
       text-decoration: none;
-      color: #888;
-      font-size: 0.72rem;
+      color: #777;
+      font-size: 0.67rem;
       white-space: nowrap;
       border-bottom: 2px solid transparent;
       transition: color 0.2s, border-color 0.2s;
       flex-shrink: 0;
     }
-    .nav-item:hover { color: #fff; border-bottom-color: var(--accent); }
-    .nav-item .nav-icon { font-size: 1.2rem; }
+    .nav-item:hover { color: #fff; border-bottom-color: var(--sea-light); }
+    .nav-item .nav-icon { font-size: 1.05rem; }
 
     /* PESCHICI INTRO CARD */
     .peschici-intro {
@@ -550,22 +580,49 @@
   </div>
 </div>
 
-<!-- NAV MENU -->
+<!-- NAV MENU — due livelli: città → sezioni -->
 <nav class="nav-menu">
-  <div class="nav-inner">
+
+  <!-- LIVELLO 1: selezione città -->
+  <div class="nav-cities-row">
+    <button class="nav-city-btn active" data-city="vieste">🏖️ Vieste</button>
+    <button class="nav-city-btn" data-city="peschici">🏘️ Peschici</button>
+    <button class="nav-city-btn" data-city="mattinata">🌅 Mattinata</button>
+    <button class="nav-city-btn" data-city="gargano">🗺️ Gargano</button>
+  </div>
+
+  <!-- LIVELLO 2: sezioni Vieste (default visibile) -->
+  <div class="nav-sections-row active" data-city-sections="vieste">
     <a href="#spiagge" class="nav-item"><span class="nav-icon">🏖️</span>Spiagge</a>
     <a href="#ristoranti" class="nav-item"><span class="nav-icon">🐟</span>Ristoranti</a>
     <a href="#panifici" class="nav-item"><span class="nav-icon">🍞</span>Panifici</a>
     <a href="#gelaterie" class="nav-item"><span class="nav-icon">🍦</span>Gelaterie</a>
     <a href="#supermercati" class="nav-item"><span class="nav-icon">🛒</span>Supermercati</a>
     <a href="#mercato" class="nav-item"><span class="nav-icon">🧺</span>Mercato</a>
-    <a href="#mattinata" class="nav-item"><span class="nav-icon">🌅</span>Mattinata</a>
-    <a href="#peschici" class="nav-item"><span class="nav-icon">🏘️</span>Peschici</a>
-    <a href="#arte" class="nav-item"><span class="nav-icon">🎨</span>Arte</a>
     <a href="#cultura" class="nav-item"><span class="nav-icon">🏛️</span>Cultura</a>
-    <a href="#itinerario" class="nav-item"><span class="nav-icon">📅</span>Itinerario</a>
-    <a href="#arrivare" class="nav-item"><span class="nav-icon">🚗</span>Come arrivare</a>
   </div>
+
+  <!-- LIVELLO 2: sezioni Peschici -->
+  <div class="nav-sections-row" data-city-sections="peschici">
+    <a href="#peschici" class="nav-item"><span class="nav-icon">🏘️</span>Intro</a>
+    <a href="#peschici-borgo" class="nav-item"><span class="nav-icon">🗺️</span>Borgo</a>
+    <a href="#peschici-spiagge" class="nav-item"><span class="nav-icon">🏖️</span>Spiagge</a>
+  </div>
+
+  <!-- LIVELLO 2: sezioni Mattinata -->
+  <div class="nav-sections-row" data-city-sections="mattinata">
+    <a href="#mattinata" class="nav-item"><span class="nav-icon">🌅</span>Intro</a>
+    <a href="#mattinata-luoghi" class="nav-item"><span class="nav-icon">🗺️</span>Luoghi</a>
+    <a href="#mattinata-spiagge" class="nav-item"><span class="nav-icon">🏖️</span>Spiagge</a>
+  </div>
+
+  <!-- LIVELLO 2: sezioni Gargano generale -->
+  <div class="nav-sections-row" data-city-sections="gargano">
+    <a href="#arte" class="nav-item"><span class="nav-icon">🎨</span>Arte</a>
+    <a href="#itinerario" class="nav-item"><span class="nav-icon">📅</span>Itinerario</a>
+    <a href="#arrivare" class="nav-item"><span class="nav-icon">🚗</span>Arrivare</a>
+  </div>
+
 </nav>
 
 <!-- RESIDENCE -->
@@ -1027,7 +1084,7 @@
     La zona libera della Baia delle Zagare è protetta: <strong>solo 20 pass gratuiti al giorno</strong>, distribuiti all'<strong>Info Point di Mattinata — Corso Matino 64</strong>. I pass sono <strong>nominativi, non prenotabili</strong>, ritiro di persona con documento d'identità. In alta stagione: fila prima dell'apertura. Alternativa senza pass: <strong>escursione in barca</strong> da Mattinata o Vieste (le barche si fermano davanti ai faraglioni per soste bagno). Scarpe da scoglio obbligatorie — fondale di ciottoli bianchi.
   </div>
 
-  <div class="peschici-sub">🗺️ Cosa vedere e fare</div>
+  <div id="mattinata-luoghi" class="peschici-sub">🗺️ Cosa vedere e fare</div>
   <div class="gems-grid">
 
     <div class="gem-card">
@@ -1080,7 +1137,7 @@
 
   </div>
 
-  <div class="peschici-sub">🏖️ Spiagge di Mattinata e dintorni</div>
+  <div id="mattinata-spiagge" class="peschici-sub">🏖️ Spiagge di Mattinata e dintorni</div>
   <div class="beach-grid">
 
     <div class="beach-card">
@@ -1165,7 +1222,7 @@
     </div>
   </div>
 
-  <div class="peschici-sub">🏘️ Cosa vedere nel borgo</div>
+  <div id="peschici-borgo" class="peschici-sub">🏘️ Cosa vedere nel borgo</div>
   <div class="gems-grid">
 
     <div class="gem-card">
@@ -1218,7 +1275,7 @@
 
   </div>
 
-  <div class="peschici-sub">🏖️ Spiagge intorno a Peschici</div>
+  <div id="peschici-spiagge" class="peschici-sub">🏖️ Spiagge intorno a Peschici</div>
   <div class="beach-grid">
 
     <div class="beach-card">
@@ -1792,6 +1849,34 @@
   <p>Guida creata per <span>Dario</span> · Gargano — Vieste, Peschici, Mattinata & Dintorni · Giugno 2026</p>
   <p style="margin-top:8px; color:#444;">Buon viaggio nel Gargano autentico 🌊</p>
 </footer>
+
+
+<script>
+// Nav a due livelli: click su città → mostra relative sezioni
+(function () {
+  var cityBtns = document.querySelectorAll('.nav-city-btn');
+  var sectionRows = document.querySelectorAll('.nav-sections-row');
+
+  cityBtns.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var city = this.dataset.city;
+
+      // aggiorna pulsanti città
+      cityBtns.forEach(function (b) { b.classList.remove('active'); });
+      this.classList.add('active');
+
+      // aggiorna righe sezioni
+      sectionRows.forEach(function (row) {
+        if (row.dataset.citySections === city) {
+          row.classList.add('active');
+        } else {
+          row.classList.remove('active');
+        }
+      });
+    });
+  });
+})();
+</script>
 
 </body>
 </html>
