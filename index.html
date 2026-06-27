@@ -564,6 +564,98 @@
       .residence-card { flex-direction: column; }
       .day-tag { display: none; }
     }
+  
+    /* ===================== GALLERY ===================== */
+    #gallery-lock-overlay {
+      position: fixed; inset: 0; z-index: 9000;
+      background: rgba(10,20,30,0.97);
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column; gap: 18px;
+    }
+    .lock-box {
+      background: #1a2a38; border: 1px solid #0a7ea4;
+      border-radius: 18px; padding: 44px 40px;
+      text-align: center; max-width: 380px; width: 90%;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+    }
+    .lock-icon { font-size: 2.8rem; margin-bottom: 14px; }
+    .lock-box h2 { color: #fff; font-size: 1.4rem; margin-bottom: 6px; }
+    .lock-box p { color: #aac; font-size: 0.9rem; margin-bottom: 22px; }
+    .lock-input {
+      width: 100%; padding: 13px 16px; border-radius: 10px;
+      border: 1px solid #0a7ea4; background: #0d1a26;
+      color: #fff; font-size: 1rem; margin-bottom: 14px;
+      outline: none; text-align: center; letter-spacing: 2px;
+    }
+    .lock-input:focus { border-color: #3ab4d8; }
+    .lock-btn {
+      width: 100%; padding: 13px; border-radius: 10px;
+      background: linear-gradient(135deg, #0a7ea4, #3ab4d8);
+      color: #fff; font-size: 1rem; font-weight: 700;
+      border: none; cursor: pointer; transition: opacity .2s;
+    }
+    .lock-btn:hover { opacity: .85; }
+    .lock-error { color: #e07b39; font-size: 0.88rem; min-height: 18px; margin-top: 4px; }
+
+    /* Gallery grid */
+    #gallery-section { display: none; }
+    #gallery-section.unlocked { display: block; }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 10px; padding: 10px 0;
+    }
+    .photo-item {
+      position: relative; border-radius: 10px; overflow: hidden;
+      aspect-ratio: 1; background: #111; cursor: pointer;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .photo-item:hover { transform: scale(1.03); box-shadow: 0 4px 20px rgba(0,126,164,0.4); }
+    .photo-item img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+    }
+    .photo-num {
+      position: absolute; bottom: 6px; right: 8px;
+      background: rgba(0,0,0,0.55); color: #fff;
+      font-size: 0.7rem; padding: 2px 7px; border-radius: 20px;
+    }
+    /* Lightbox */
+    #lightbox {
+      position: fixed; inset: 0; z-index: 9500;
+      background: rgba(0,0,0,0.95);
+      display: none; align-items: center; justify-content: center;
+      flex-direction: column;
+    }
+    #lightbox.active { display: flex; }
+    #lightbox img {
+      max-width: 92vw; max-height: 82vh;
+      border-radius: 10px; box-shadow: 0 8px 40px rgba(0,0,0,0.7);
+    }
+    .lb-counter { color: #aac; margin-top: 12px; font-size: 0.9rem; }
+    .lb-close {
+      position: fixed; top: 18px; right: 22px;
+      color: #fff; font-size: 2rem; cursor: pointer;
+      background: rgba(0,0,0,0.5); border-radius: 50%;
+      width: 44px; height: 44px; display: flex; align-items: center; justify-content: center;
+      border: none; line-height: 1;
+    }
+    .lb-nav {
+      position: fixed; top: 50%; transform: translateY(-50%);
+      color: #fff; font-size: 2.5rem; cursor: pointer;
+      background: rgba(0,0,0,0.4); border: none;
+      padding: 10px 16px; border-radius: 8px;
+      transition: background .2s;
+    }
+    .lb-nav:hover { background: rgba(10,126,164,0.6); }
+    .lb-prev { left: 10px; }
+    .lb-next { right: 10px; }
+    /* Gallery nav button */
+    .nav-section-btn.gallery-btn {
+      background: linear-gradient(135deg, rgba(10,126,164,0.35), rgba(58,180,216,0.25));
+      border-color: #3ab4d8 !important;
+      color: #ffe082 !important;
+    }
+
   </style>
 </head>
 <body>
@@ -593,6 +685,8 @@
 
   <!-- LIVELLO 2: sezioni Vieste (default visibile) -->
   <div class="nav-sections-row active" data-city-sections="vieste">
+    <button class="nav-section-btn gallery-btn" onclick="openGallery()">📸 Foto vacanza</button>
+
     <a href="#spiagge" class="nav-item"><span class="nav-icon">🏖️</span>Spiagge</a>
     <a href="#cultura" class="nav-item"><span class="nav-icon">🏛️</span>Cultura</a>
     <a href="#ristoranti" class="nav-item"><span class="nav-icon">🐟</span>Ristoranti</a>
@@ -1988,6 +2082,337 @@
     });
   });
 })();
+</script>
+
+
+<!-- ========== GALLERY SECTION ========== -->
+<section id="gallery-section">
+  <div class="section-label">Galleria privata</div>
+  <h2>📸 Foto Vacanza — Vieste 2026</h2>
+  <p style="color:#aac; margin-bottom:20px;">Vieste, Gargano · 20–27 Giugno 2026 · <span id="gallery-count" style="color:#3ab4d8;"></span></p>
+  <div class="gallery-grid" id="gallery-grid">
+    <div class="photo-item" data-index="1">
+      <img src="photos/photo_035bf7eb2b0145bf84198847dd4f0a96.jpg" alt="Foto 1 - Vieste 2026" loading="lazy" onclick="openLightbox(this.src, 1)">
+      <div class="photo-num">1</div>
+    </div>
+    <div class="photo-item" data-index="2">
+      <img src="photos/photo_08d315ce454b47a191d13e14d84fefcb.jpg" alt="Foto 2 - Vieste 2026" loading="lazy" onclick="openLightbox(this.src, 2)">
+      <div class="photo-num">2</div>
+    </div>
+    <div class="photo-item" data-index="3">
+      <img src="photos/photo_0be7e827bff64eaca88af3599695c698.jpg" alt="Foto 3 - Vieste 2026" loading="lazy" onclick="openLightbox(this.src, 3)">
+      <div class="photo-num">3</div>
+    </div>
+    <div class="photo-item" data-index="4">
+      <img src="photos/photo_0c64302827ac443cbb378672caba7cb2.jpg" alt="Foto 4 - Vieste 2026" loading="lazy" onclick="openLightbox(this.src, 4)">
+      <div class="photo-num">4</div>
+    </div>
+    <div class="photo-item" data-index="5">
+      <img src="photos/photo_1b9c4d247ebe45af8494e2a7c51d0289.jpg" alt="Foto 5 - Vieste 2026" loading="lazy" onclick="openLightbox(this.src, 5)">
+      <div class="photo-num">5</div>
+    </div>
+    <div class="photo-item" data-index="6">
+      <img src="photos/photo_1c04a76044334b22b1e7626164a76645.jpg" alt="Foto 6 - Vieste 2026" loading="lazy" onclick="openLightbox(this.src, 6)">
+      <div class="photo-num">6</div>
+    </div>
+    <div class="photo-item" data-index="7">
+      <img src="photos/photo_1dc4367f6cd7429884bab0f20afeb9ee.jpg" alt="Foto 7 - Vieste 2026" loading="lazy" onclick="openLightbox(this.src, 7)">
+      <div class="photo-num">7</div>
+    </div>
+    <div class="photo-item" data-index="8">
+      <img src="photos/photo_217fe5bd22fa4f508a1c9a1571098c1e.jpg" alt="Foto 8 - Vieste 2026" loading="lazy" onclick="openLightbox(this.src, 8)">
+      <div class="photo-num">8</div>
+    </div>
+    <div class="photo-item" data-index="9">
+      <img src="photos/photo_222110b2833848e5a51a9f2daeed77ee.jpg" alt="Foto 9 - Vieste 2026" loading="lazy" onclick="openLightbox(this.src, 9)">
+      <div class="photo-num">9</div>
+    </div>
+    <div class="photo-item" data-index="10">
+      <img src="photos/photo_225d91ab12354acd8837e41cd0857848.jpg" alt="Foto 10 - Vieste 2026" loading="lazy" onclick="openLightbox(this.src, 10)">
+      <div class="photo-num">10</div>
+    </div>
+    <div class="photo-item" data-index="11">
+      <img src="photos/photo_27107aebc60d458c8be95fbf480dbeaa.jpg" alt="Foto 11 - Vieste 2026" loading="lazy" onclick="openLightbox(this.src, 11)">
+      <div class="photo-num">11</div>
+    </div>
+    <div class="photo-item" data-index="12">
+      <img src="photos/photo_2738fb2dc0ff4680a216818dd37100f3.jpg" alt="Foto 12 - Vieste 2026" loading="lazy" onclick="openLightbox(this.src, 12)">
+      <div class="photo-num">12</div>
+    </div>
+    <div class="photo-item" data-index="13">
+      <img src="photos/photo_28784ce572ed420482ba629f123c9066.jpg" alt="Foto 13 - Vieste 2026" loading="lazy" onclick="openLightbox(this.src, 13)">
+      <div class="photo-num">13</div>
+    </div>
+    <div class="photo-item" data-index="14">
+      <img src="photos/photo_2ed67e46455942c4a07b6f8fe643a5e9.jpg" alt="Foto 14 - Vieste 2026" loading="lazy" onclick="openLightbox(this.src, 14)">
+      <div class="photo-num">14</div>
+    </div>
+    <div class="photo-item" data-index="15">
+      <img src="photos/photo_306bf6344b5247e79ba2212b14dd1ec7.jpg" alt="Foto 15 - Vieste 2026" loading="lazy" onclick="openLightbox(this.src, 15)">
+      <div class="photo-num">15</div>
+    </div>
+    <div class="photo-item" data-index="16">
+      <img src="photos/photo_379859aae7a94d309dec7447f929cde1.jpg" alt="Foto 16 - Vieste 2026" loading="lazy" onclick="openLightbox(this.src, 16)">
+      <div class="photo-num">16</div>
+    </div>
+    <div class="photo-item" data-index="17">
+      <img src="photos/photo_3efbdac0192842b39c80d22ad5a23db2.jpg" alt="Foto 17 - Vieste 2026" loading="lazy" onclick="openLightbox(this.src, 17)">
+      <div class="photo-num">17</div>
+    </div>
+    <div class="photo-item" data-index="18">
+      <img src="photos/photo_466af051c7d14640b4836c9d15b2ec29.jpg" alt="Foto 18 - Vieste 2026" loading="lazy" onclick="openLightbox(this.src, 18)">
+      <div class="photo-num">18</div>
+    </div>
+    <div class="photo-item" data-index="19">
+      <img src="photos/photo_47605ef2e01a4287bad8c64725f247ec.jpg" alt="Foto 19 - Vieste 2026" loading="lazy" onclick="openLightbox(this.src, 19)">
+      <div class="photo-num">19</div>
+    </div>
+    <div class="photo-item" data-index="20">
+      <img src="photos/photo_4e1a326ac2074d10a4c756cfbac826f5.jpg" alt="Foto 20 - Vieste 2026" loading="lazy" onclick="openLightbox(this.src, 20)">
+      <div class="photo-num">20</div>
+    </div>
+    <div class="photo-item" data-index="21">
+      <img src="photos/photo_53a058202538426a8fbd5382452af6ca.jpg" alt="Foto 21 - Vieste 2026" loading="lazy" onclick="openLightbox(this.src, 21)">
+      <div class="photo-num">21</div>
+    </div>
+    <div class="photo-item" data-index="22">
+      <img src="photos/photo_5b8a0719c0564959acafe07f96c1f4f8.jpg" alt="Foto 22 - Vieste 2026" loading="lazy" onclick="openLightbox(this.src, 22)">
+      <div class="photo-num">22</div>
+    </div>
+    <div class="photo-item" data-index="23">
+      <img src="photos/photo_643af6e87c8145e8a78cca289d6aa3fc.jpg" alt="Foto 23 - Vieste 2026" loading="lazy" onclick="openLightbox(this.src, 23)">
+      <div class="photo-num">23</div>
+    </div>
+    <div class="photo-item" data-index="24">
+      <img src="photos/photo_6545bbc53b0643a59472f0048327f680.jpg" alt="Foto 24 - Vieste 2026" loading="lazy" onclick="openLightbox(this.src, 24)">
+      <div class="photo-num">24</div>
+    </div>
+    <div class="photo-item" data-index="25">
+      <img src="photos/photo_8012f207aaf8474bb80eaa6518d19dd1.jpg" alt="Foto 25 - Vieste 2026" loading="lazy" onclick="openLightbox(this.src, 25)">
+      <div class="photo-num">25</div>
+    </div>
+    <div class="photo-item" data-index="26">
+      <img src="photos/photo_89a0f518501c4144a7adaef49979ec4c.jpg" alt="Foto 26 - Vieste 2026" loading="lazy" onclick="openLightbox(this.src, 26)">
+      <div class="photo-num">26</div>
+    </div>
+    <div class="photo-item" data-index="27">
+      <img src="photos/photo_93d34955ccfb4745aa070cb8e1226f21.jpg" alt="Foto 27 - Vieste 2026" loading="lazy" onclick="openLightbox(this.src, 27)">
+      <div class="photo-num">27</div>
+    </div>
+    <div class="photo-item" data-index="28">
+      <img src="photos/photo_9870b959af30422ab462cfcc53639a87.jpg" alt="Foto 28 - Vieste 2026" loading="lazy" onclick="openLightbox(this.src, 28)">
+      <div class="photo-num">28</div>
+    </div>
+    <div class="photo-item" data-index="29">
+      <img src="photos/photo_a33b6070d7424e74a51a3c503bff8157.jpg" alt="Foto 29 - Vieste 2026" loading="lazy" onclick="openLightbox(this.src, 29)">
+      <div class="photo-num">29</div>
+    </div>
+    <div class="photo-item" data-index="30">
+      <img src="photos/photo_a9d4e75774c5420a8556b4fbece53ae1.jpg" alt="Foto 30 - Vieste 2026" loading="lazy" onclick="openLightbox(this.src, 30)">
+      <div class="photo-num">30</div>
+    </div>
+    <div class="photo-item" data-index="31">
+      <img src="photos/photo_b060f81d0d3a45c0a33f3d1b6166fe28.jpg" alt="Foto 31 - Vieste 2026" loading="lazy" onclick="openLightbox(this.src, 31)">
+      <div class="photo-num">31</div>
+    </div>
+    <div class="photo-item" data-index="32">
+      <img src="photos/photo_b27f23a46b74423aba6a3b6a618730c1.jpg" alt="Foto 32 - Vieste 2026" loading="lazy" onclick="openLightbox(this.src, 32)">
+      <div class="photo-num">32</div>
+    </div>
+    <div class="photo-item" data-index="33">
+      <img src="photos/photo_b2edd1f53a054dd59a2b9db453d44ad8.jpg" alt="Foto 33 - Vieste 2026" loading="lazy" onclick="openLightbox(this.src, 33)">
+      <div class="photo-num">33</div>
+    </div>
+    <div class="photo-item" data-index="34">
+      <img src="photos/photo_b5686ac61fed48a0ae967d6eff055fdd.jpg" alt="Foto 34 - Vieste 2026" loading="lazy" onclick="openLightbox(this.src, 34)">
+      <div class="photo-num">34</div>
+    </div>
+    <div class="photo-item" data-index="35">
+      <img src="photos/photo_c0fd1bbf50084b90a0253c2196c6e0d1.jpg" alt="Foto 35 - Vieste 2026" loading="lazy" onclick="openLightbox(this.src, 35)">
+      <div class="photo-num">35</div>
+    </div>
+    <div class="photo-item" data-index="36">
+      <img src="photos/photo_c39106c0b2524998aad224427139c11d.jpg" alt="Foto 36 - Vieste 2026" loading="lazy" onclick="openLightbox(this.src, 36)">
+      <div class="photo-num">36</div>
+    </div>
+    <div class="photo-item" data-index="37">
+      <img src="photos/photo_c3cfbeb9fd4c4b66bf7bca3847707f7d.jpg" alt="Foto 37 - Vieste 2026" loading="lazy" onclick="openLightbox(this.src, 37)">
+      <div class="photo-num">37</div>
+    </div>
+    <div class="photo-item" data-index="38">
+      <img src="photos/photo_c5c55654755448edb6b7c8487ee77dae.jpg" alt="Foto 38 - Vieste 2026" loading="lazy" onclick="openLightbox(this.src, 38)">
+      <div class="photo-num">38</div>
+    </div>
+    <div class="photo-item" data-index="39">
+      <img src="photos/photo_cc712e73b05548d5bac13e338e0d7ec4.jpg" alt="Foto 39 - Vieste 2026" loading="lazy" onclick="openLightbox(this.src, 39)">
+      <div class="photo-num">39</div>
+    </div>
+    <div class="photo-item" data-index="40">
+      <img src="photos/photo_d12defc327134c5984642b07321d601b.jpg" alt="Foto 40 - Vieste 2026" loading="lazy" onclick="openLightbox(this.src, 40)">
+      <div class="photo-num">40</div>
+    </div>
+    <div class="photo-item" data-index="41">
+      <img src="photos/photo_d1948bf20c724122b31fa8c9bc4fa08a.jpg" alt="Foto 41 - Vieste 2026" loading="lazy" onclick="openLightbox(this.src, 41)">
+      <div class="photo-num">41</div>
+    </div>
+    <div class="photo-item" data-index="42">
+      <img src="photos/photo_d834c7199c954558ab36d4cf07e72244.jpg" alt="Foto 42 - Vieste 2026" loading="lazy" onclick="openLightbox(this.src, 42)">
+      <div class="photo-num">42</div>
+    </div>
+    <div class="photo-item" data-index="43">
+      <img src="photos/photo_db66d98723b1453fa4267388c3e09564.jpg" alt="Foto 43 - Vieste 2026" loading="lazy" onclick="openLightbox(this.src, 43)">
+      <div class="photo-num">43</div>
+    </div>
+    <div class="photo-item" data-index="44">
+      <img src="photos/photo_de660a5466254d019402143142a2cdd9.jpg" alt="Foto 44 - Vieste 2026" loading="lazy" onclick="openLightbox(this.src, 44)">
+      <div class="photo-num">44</div>
+    </div>
+    <div class="photo-item" data-index="45">
+      <img src="photos/photo_deaf0e7b906a49d39816c7397242aac3.jpg" alt="Foto 45 - Vieste 2026" loading="lazy" onclick="openLightbox(this.src, 45)">
+      <div class="photo-num">45</div>
+    </div>
+    <div class="photo-item" data-index="46">
+      <img src="photos/photo_dfb75640aa8a43f682e4262cf6428c53.jpg" alt="Foto 46 - Vieste 2026" loading="lazy" onclick="openLightbox(this.src, 46)">
+      <div class="photo-num">46</div>
+    </div>
+    <div class="photo-item" data-index="47">
+      <img src="photos/photo_eee34c3114ae4ab09a0758d2fe9b4d26.jpg" alt="Foto 47 - Vieste 2026" loading="lazy" onclick="openLightbox(this.src, 47)">
+      <div class="photo-num">47</div>
+    </div>
+    <div class="photo-item" data-index="48">
+      <img src="photos/photo_f2838a4328ed46b6a48aaefe8080db47.jpg" alt="Foto 48 - Vieste 2026" loading="lazy" onclick="openLightbox(this.src, 48)">
+      <div class="photo-num">48</div>
+    </div>
+    <div class="photo-item" data-index="49">
+      <img src="photos/photo_f3ca48bcc9ad4236aae219469f28170f.jpg" alt="Foto 49 - Vieste 2026" loading="lazy" onclick="openLightbox(this.src, 49)">
+      <div class="photo-num">49</div>
+    </div>
+    <div class="photo-item" data-index="50">
+      <img src="photos/photo_f632684ec38848fb8f4e94f318e0331b.jpg" alt="Foto 50 - Vieste 2026" loading="lazy" onclick="openLightbox(this.src, 50)">
+      <div class="photo-num">50</div>
+    </div>
+    <div class="photo-item" data-index="51">
+      <img src="photos/photo_f727089b8be648a4ad72be62d1049c49.jpg" alt="Foto 51 - Vieste 2026" loading="lazy" onclick="openLightbox(this.src, 51)">
+      <div class="photo-num">51</div>
+    </div>
+    <div class="photo-item" data-index="52">
+      <img src="photos/photo_f730061660a14413a21f14640163c762.jpg" alt="Foto 52 - Vieste 2026" loading="lazy" onclick="openLightbox(this.src, 52)">
+      <div class="photo-num">52</div>
+    </div>
+    <div class="photo-item" data-index="53">
+      <img src="photos/photo_fafa9bdc099e4a358a66250eb57d0b76.jpg" alt="Foto 53 - Vieste 2026" loading="lazy" onclick="openLightbox(this.src, 53)">
+      <div class="photo-num">53</div>
+    </div>
+    <div class="photo-item" data-index="54">
+      <img src="photos/photo_fbffe9b7ee78402c9446d5870424f8aa.jpg" alt="Foto 54 - Vieste 2026" loading="lazy" onclick="openLightbox(this.src, 54)">
+      <div class="photo-num">54</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Password overlay -->
+<div id="gallery-lock-overlay" style="display:none;">
+  <div class="lock-box">
+    <div class="lock-icon">🔐</div>
+    <h2>Galleria privata</h2>
+    <p>Inserisci la password per vedere le foto della vacanza</p>
+    <input type="password" class="lock-input" id="pwd-input" placeholder="Password" onkeydown="if(event.key==='Enter') checkPwd()">
+    <button class="lock-btn" onclick="checkPwd()">Accedi alle foto</button>
+    <div class="lock-error" id="pwd-error"></div>
+  </div>
+</div>
+
+<!-- Lightbox -->
+<div id="lightbox">
+  <button class="lb-close" onclick="closeLightbox()">✕</button>
+  <button class="lb-nav lb-prev" onclick="lbNav(-1)">‹</button>
+  <img id="lb-img" src="" alt="">
+  <div class="lb-counter" id="lb-counter"></div>
+  <button class="lb-nav lb-next" onclick="lbNav(1)">›</button>
+</div>
+
+<script>
+// ---- GALLERY PASSWORD LOGIC ----
+var GALLERY_PWD = 'silvia2026';
+var SESSION_KEY = 'gg_gallery_auth';
+var lbPhotos = [];
+var lbCurrent = 0;
+
+function openGallery() {
+  var section = document.getElementById('gallery-section');
+  var overlay = document.getElementById('gallery-lock-overlay');
+  if (sessionStorage.getItem(SESSION_KEY) === '1') {
+    unlockGallery();
+    section.scrollIntoView({behavior:'smooth'});
+  } else {
+    overlay.style.display = 'flex';
+    setTimeout(function(){ document.getElementById('pwd-input').focus(); }, 100);
+  }
+}
+
+function checkPwd() {
+  var val = document.getElementById('pwd-input').value;
+  var err = document.getElementById('pwd-error');
+  if (val === GALLERY_PWD) {
+    sessionStorage.setItem(SESSION_KEY, '1');
+    document.getElementById('gallery-lock-overlay').style.display = 'none';
+    unlockGallery();
+    document.getElementById('gallery-section').scrollIntoView({behavior:'smooth'});
+  } else {
+    err.textContent = '❌ Password errata, riprova';
+    document.getElementById('pwd-input').value = '';
+    document.getElementById('pwd-input').focus();
+    setTimeout(function(){ err.textContent = ''; }, 3000);
+  }
+}
+
+function unlockGallery() {
+  var section = document.getElementById('gallery-section');
+  section.classList.add('unlocked');
+  var imgs = document.querySelectorAll('#gallery-grid img');
+  document.getElementById('gallery-count').textContent = imgs.length + ' foto';
+  lbPhotos = Array.from(imgs).map(function(img){ return img.src; });
+}
+
+function openLightbox(src, idx) {
+  lbCurrent = idx - 1;
+  document.getElementById('lb-img').src = src;
+  document.getElementById('lb-counter').textContent = (lbCurrent+1) + ' / ' + lbPhotos.length;
+  document.getElementById('lightbox').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+function lbNav(dir) {
+  lbCurrent = (lbCurrent + dir + lbPhotos.length) % lbPhotos.length;
+  document.getElementById('lb-img').src = lbPhotos[lbCurrent];
+  document.getElementById('lb-counter').textContent = (lbCurrent+1) + ' / ' + lbPhotos.length;
+}
+
+// Chiudi lightbox con ESC
+document.addEventListener('keydown', function(e) {
+  var lb = document.getElementById('lightbox');
+  if (lb.classList.contains('active')) {
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowRight') lbNav(1);
+    if (e.key === 'ArrowLeft') lbNav(-1);
+  }
+});
+
+// Chiudi lightbox cliccando sfondo
+document.getElementById('lightbox').addEventListener('click', function(e) {
+  if (e.target === this) closeLightbox();
+});
+
+// Check auth al caricamento (se già autenticato, sblocca subito)
+if (sessionStorage.getItem(SESSION_KEY) === '1') {
+  unlockGallery();
+}
 </script>
 
 </body>
